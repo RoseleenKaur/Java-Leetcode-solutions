@@ -1,0 +1,18 @@
+class Solution {
+    public boolean isPalindrome(int x) {
+        int rev=0,y, initvalue=x;
+        if(x<0)
+            return false;
+        while(x!=0)
+        {
+            y=x%10;
+            x=x/10;
+            rev=rev*10+y;
+        }
+        if(initvalue==rev)
+        {
+            return true;          
+        }            
+        return false;
+    }
+}
