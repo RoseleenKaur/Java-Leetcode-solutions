@@ -1,0 +1,32 @@
+class Solution {
+    public int removeDuplicates(int[] nums) {
+        if(nums.length==0 )
+            return 0;
+        if(nums.length==1)
+            return 1;
+        int i=0,j=1,maxval=nums[nums.length-1];
+        int counter=0;
+            while(true)
+            {
+                if(j==nums.length)
+                    break;
+                if(nums[i]==nums[j])
+                {
+                    
+                       nums[j]=nums[nums.length-1];
+                       j++; 
+                        counter++;
+                    
+                    
+                }
+                else
+                {
+                    i=j;
+                    j=i+1;
+                }
+                                   
+            } 
+        Arrays.sort(nums);     
+        return nums.length-counter;
+    }
+}
