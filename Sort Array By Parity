@@ -1,0 +1,19 @@
+class Solution {
+    public int[] sortArrayByParity(int[] A) {
+        int evenid=0,oddid=A.length-1;
+        int[] indexarr=new int[A.length];
+        for(int i=0;i<A.length;i++){
+            if(A[i]%2==0){
+                indexarr[evenid]=A[i];
+                evenid++;
+            }else {
+                indexarr[oddid]=A[i];
+                oddid--;
+            }
+                
+            
+        }
+        return indexarr;
+      
+    }
+}
