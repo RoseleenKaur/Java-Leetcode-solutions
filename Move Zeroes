@@ -1,0 +1,26 @@
+class Solution {
+    public void moveZeroes(int[] nums) {
+        int keepid=0,nonzeroid=0,i=0;
+        while(i<nums.length){
+            if(nums[i]!=0){
+                i++;
+                continue;
+            }else{
+                keepid=i;
+                
+            }
+            i=nonzeroid<keepid?keepid+1:nonzeroid+1;    
+            while(i<nums.length &&nums[i]==0){
+                i++;
+                continue;
+            }
+            if(i==nums.length)
+                break;
+                nonzeroid=i;
+            nums[keepid]=nums[nonzeroid];
+            nums[nonzeroid]=0;
+            i=keepid+1;
+        }
+        
+    }
+}
