@@ -1,0 +1,46 @@
+class Solution {
+    public List<String> removeComments(String[] source) {
+        ArrayList<String> list=new ArrayList<>();
+        int i=0,j=0,flag=1;
+        String str="";
+        while(i<source.length){
+            while(j<source[i].length()){
+                if(source[i].substring(j).startsWith("//") && flag!=0)
+                    break;
+                if(source[i].substring(j).startsWith("/*") && flag!=0)
+                {  flag=0;
+                    j=j+2;
+                 continue;
+                }
+                
+                if(source[i].substring(j).startsWith("*/") && flag==0)
+                { 
+                 j=j+2;
+                 flag=1;
+                 continue;
+                    
+                }
+                if(flag==1){
+                     str+=source[i].charAt(j);
+                     
+                }
+                
+                j++;
+            }
+           
+            if(flag==1){
+                if(!str.equals(""))
+                 list.add(str);
+                str="";
+                j=0;
+            }
+             
+            i++;
+            j=0;
+            System.out.print(i);
+        }
+        
+        return list;
+        
+    }
+}
