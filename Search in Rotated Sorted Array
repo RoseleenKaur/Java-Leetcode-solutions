@@ -1,0 +1,53 @@
+class Solution {
+    public int search(int[] nums, int target) {
+        
+        
+        return binarySearchtest(nums,target,0,nums.length-1);
+    }
+     public int binarySearchtest(int[] nums, int target,int start,int end){
+         if(start>end)
+             return -1;
+         if(start==end){
+             if(nums[start]==target)
+                 return start;
+             else
+                 return -1;
+         }
+         if(end==start+1){
+             if(nums[start]==target)
+                 return start;
+             else if(nums[end]==target)
+                 return end;
+             return -1;
+         }
+         int mid=(start+end)/2,ans=-1;
+         if(nums[mid]<nums[end]){
+             ans=binarySearch(nums,target,mid,end);
+             end=mid-1;
+         }else{ 
+             
+             ans=binarySearch(nums,target,start,mid-1);
+             start=mid;
+         }
+         if(ans>=0)
+             return ans;
+         else{
+             return binarySearchtest(nums,target,start,end);
+         }
+     }
+    
+    public int binarySearch(int[] nums, int target,int start,int end){
+        if(start>end)
+            return -1;
+        int mid=(start+end)/2;
+        if(target>nums[mid]){
+            return binarySearch(nums,target,mid+1,end);
+        }
+        else if(target<nums[mid]){
+             return binarySearch(nums,target,start,mid-1);
+        }
+        else
+            return mid;
+        
+    }
+}
