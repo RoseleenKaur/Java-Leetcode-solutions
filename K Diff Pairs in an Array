@@ -1,0 +1,19 @@
+class Solution {
+    public int findPairs(int[] nums, int k) {
+        //Arrays.sort(nums);
+        Set<String> set=new HashSet<>();
+        for(int i=0;i<nums.length;i++){
+            for(int j=i+1;j<nums.length;j++){
+                if(Math.abs(nums[j]-nums[i])==k){
+                    String str=nums[i]<nums[j]?nums[i]+nums[j]+"":nums[j]+nums[i]+"";
+                    if(!set.contains(str))
+                    {
+                       set.add(str);
+                    }
+                }
+            }
+        }
+        return set.size();
+        
+    }
+}
