@@ -1,0 +1,55 @@
+
+class Solution {
+    public int maxSubArray(int[] nums) {
+    
+       
+        return maxSubArray(nums,0,nums.length-1);
+    }
+   public int maxSubArray(int[] nums, int start, int end) {
+       if(start==end){
+           return nums[start];
+       }
+       if(start>end){
+           return Integer.MIN_VALUE;
+       }
+       int sum1,sum2;
+       int mid=(start+end)/2;
+       sum1=maxSubArray(nums,start,mid);
+       sum2=maxSubArray(nums,mid+1,end);
+       return Math.max(findmax(nums,mid,start,end),Math.max(sum1,sum2));
+       
+   }
+    
+    public int findmax(int[] nums, int mid, int start, int end){
+        int max=0,sum,finalsum;
+        if(mid<end){
+            sum=max=nums[mid+1];
+            if(mid+2<nums.length){
+            for(int i=mid+2;i<nums.length;i++){
+            sum+=nums[i];
+            if(sum>max){
+                max=sum;
+            }
+           }
+        }
+        }
+        
+        
+        max+=nums[mid];
+        sum=max;
+        if(mid-1>=0){
+            for(int i=mid-1;i>=0;i--){
+            sum+=nums[i];
+            if(sum>max){
+                max=sum;
+            }
+        }
+        
+       
+    }
+         return max;
+    
+    }
+        
+   
+}
