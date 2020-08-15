@@ -1,0 +1,26 @@
+class Solution {
+    public String removeOuterParentheses(String S) {
+        int counto=0,counte=0;
+        StringBuilder result=new StringBuilder();
+        int startid=0,endid=-1;
+        for(char c: S.toCharArray()){
+            if(c==')')
+                    counte++;
+                else
+                    counto++;
+            
+                
+            if(counte==counto){
+                    
+                    endid++;
+                    result.append(S.substring(startid+1,endid));
+                    startid=endid+1;
+                    continue;
+                    
+                }
+            endid++;
+               
+        }
+        return result.toString();
+    }
+}
