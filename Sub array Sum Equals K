@@ -1,0 +1,25 @@
+class Solution {
+    int count=0;
+    public int subarraySum(int[] nums, int k) {
+        int sum=0;
+        for(int i=0;i<nums.length;i++){
+            sum+=nums[i];
+        }
+        for(int i=0;i<nums.length;i++){
+            subarraySum(nums,k,i,nums.length-1,sum);
+            sum=sum-nums[i];
+        }
+        
+        return count;
+    }
+    public void subarraySum(int[] nums, int k,int start, int end,int sum) {
+        
+        if(sum==k)
+            count++;
+        if(start==end)
+            return;
+       
+        subarraySum(nums,k ,start,end-1,sum-nums[end]);
+        
+    }
+}
