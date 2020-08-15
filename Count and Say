@@ -1,0 +1,35 @@
+class Solution {
+    public String countAndSay(int n) {
+        String[] seq=new String[30];
+        String prev="1";
+        seq[0]=prev;
+        for(int i=1;i<n;i++)
+        {
+            seq[i]=compute(prev);
+            prev=seq[i];
+        }
+        return prev;
+        
+    }
+    public String compute(String prev)
+    {
+        String result="";
+        int counter=1;
+        char prevc=prev.charAt(0);
+        for(int i=0;i<prev.length();i++)
+        {
+            char c=prev.charAt(i);
+            if(i+1==prev.length())
+                return(result+counter+c);
+            if(c==prev.charAt(i+1))
+                counter++;
+            else
+            {
+                result= result+counter+c;
+                counter=1;
+            }   
+            
+        }
+        return result;
+    }
+}
