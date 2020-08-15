@@ -1,0 +1,42 @@
+class Solution {
+    public List<List<Integer>> generate(int numRows) {
+        
+        List<List<Integer>> arrlst=new ArrayList<List<Integer>>();
+        ArrayList<Integer> p;
+        if(numRows==0)
+        {
+            return arrlst;
+        }
+        
+             p=new ArrayList<Integer>();
+            p.add(1);
+           
+             arrlst.add(p);
+            if(numRows==1)
+                return arrlst;
+        
+             p=new ArrayList<Integer>();
+            p.add(1);
+            p.add(1);
+           
+             arrlst.add(p);
+            
+        if(numRows==2)
+                return arrlst;
+        
+        for(int i=2;i<numRows;i++)
+        {
+            p=new ArrayList();
+            p.add(1);
+            for(int j=2;j<=i;j++)
+            {
+                p.add(arrlst.get(i-1).get(j-2)+arrlst.get(i-1).get(j-1));
+            }
+            p.add(1);
+            
+            arrlst.add(p);
+        }
+        return arrlst;
+        
+    }
+}
