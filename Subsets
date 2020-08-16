@@ -1,0 +1,20 @@
+class Solution {
+    List<List<Integer>> list;
+    public List<List<Integer>> subsets(int[] nums) {
+        list=new ArrayList<>();
+        List<Integer> l=new ArrayList<>();
+        subsetsR(nums,0,l);
+        return list;
+    }
+    public void subsetsR(int[] num,int i,List<Integer> l){
+        if(i>=num.length){
+            
+            list.add(new ArrayList(l));
+            return;
+        }        
+        l.add(num[i]);
+        subsetsR(num,i+1,l); 
+        l.remove(l.size()-1);
+        subsetsR(num,i+1,l);  
+    }
+}
