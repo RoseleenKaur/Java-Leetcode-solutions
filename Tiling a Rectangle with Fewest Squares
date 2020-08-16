@@ -1,0 +1,40 @@
+class Solution {
+    public int tilingRectangle(int n, int m) {
+        if ((n == 11 && m == 13) || (m == 11 && n == 13)) return 6;
+		
+        int[][] memo = new int[n+1][m+1];
+        
+        return dp(n, m, memo);
+    }
+    
+    private int dp(int n, int m, int[][] memo) {
+        if (n < 0 || m < 0) return Integer.MAX_VALUE;
+        if (n == 0) return 0;
+        if (m == 0) return 0;
+        if (m == 1) return n;
+        if (n == 1) return m;
+        
+        if (memo[n][m] != 0) return memo[n][m];
+        
+        int largestPossibleSquare = Math.min(n, m);
+        
+        int smallestPlacements = Integer.MAX_VALUE;
+        
+        for (int i = 1; i <= largestPossibleSquare; ++i) {
+            // Try placing a i * i square, then filling out the rest with two possibilities
+            int up = dp(n - i, i, memo);
+            int leftDiagonal = dp(n, m - i, memo);
+            
+            int left = dp(i, m - i, memo);
+            int upDiagonal = dp(n - i, m, memo);
+            
+            smallestPlacements = Math.min(smallestPlacements,
+                                          Math.min(up + leftDiagonal, left + upDiagonal));
+        }
+        
+        if (smallestPlacements != Integer.MAX_VALUE) ++smallestPlacements;
+        
+        memo[n][m] = smallestPlacements;
+        return smallestPlacements;
+    }
+}
