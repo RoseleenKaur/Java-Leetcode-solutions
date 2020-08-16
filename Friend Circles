@@ -1,0 +1,64 @@
+/*We often dont need weightedQuickUnion(maintain size to compare before union) to give good performance as long as there is QuickUnion(store set as parent ids) and path compression */
+class Solution {
+    public int findCircleNum(int[][] M) {
+        QuickUnion ds=new QuickUnion(M.length);
+        for(int i=0;i<M.length;i++){
+            for(int j=0;j<M[0].length;j++){
+                if(M[i][j]==1)
+                    ds.connect(i,j);
+            }
+        }
+        return ds.numberOfSets();
+        
+    }
+}
+
+class QuickUnion{
+    int[] parent;
+    public QuickUnion(int n){
+        parent=new int[n];
+        Arrays.fill(parent,-1);
+    }
+    public int numberOfSets(){
+        int count=0;
+        for(int i: parent)
+        {
+            if(i<0)
+                count++;
+        }
+        return count;
+    }
+    //Not required for this problem
+    public boolean isConnected(int x,int y){
+        if(findRoot(x)==findRoot(y))
+            return true;
+        return false;
+    }
+    public int connect(int x,int y){
+        if(x==y)
+            return 0;
+        int rootx=findRoot(x);
+        int rooty=findRoot(y);
+        if(rootx==rooty)
+            return 1;
+        int minroot=parent[rootx]>parent[rooty]?rootx:rooty;
+        int maxroot=minroot==rooty?rootx:rooty;
+        parent[maxroot]=parent[maxroot]+parent[minroot];
+        parent[minroot]=maxroot;
+        return 0;
+    }
+    public int findRoot(int x){
+        int root=x,nextx=x;
+        while(parent[root]>=0){
+            root=parent[root];
+          //  System.out.print(x);
+        }
+        while(parent[nextx]>=0){
+            int temp=parent[nextx];
+            parent[nextx]=root;
+            nextx=temp;
+        }
+        return root;
+    }
+    
+}
