@@ -1,0 +1,53 @@
+class Solution {
+    List<List<Integer>> result=new ArrayList<>();
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        Arrays.sort(candidates);
+        
+        combinationSum2(candidates,target,0,0,new ArrayList<>());
+        
+        return result;
+    }
+    public void combinationSum2(int[] candidates,int target, int index,int sum,List<Integer> list){
+        
+        if(sum==target){
+             result.add(new ArrayList<>(list));
+            return;
+        }
+        if(sum>target)
+            return;
+        if(index>=candidates.length)
+            return;
+        
+        int count=1;
+        for(int i=index+1;i<candidates.length;i++){
+            if(candidates[i]==candidates[index])
+                count++;
+            else
+                break;
+        }
+        int num=candidates[index],s=sum;
+         combinationSum2(candidates,target,index+count,sum,list);
+        int i;
+        for(i=index;i<candidates.length;i++){
+            if(candidates[i]!=num)
+                break;
+                   
+            s+=candidates[index];
+            if(s>target)
+                break;
+            list.add(candidates[index]); 
+                combinationSum2(candidates,target,index+count,s,list);
+            
+        }
+        while(i!=index){
+            list.remove(list.size()-1);
+            i--;
+        }
+        
+        
+       // list.remove(list.size()-1);
+        
+        
+        
+    }
+}
