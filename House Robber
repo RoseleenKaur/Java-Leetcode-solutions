@@ -1,0 +1,23 @@
+class Solution {
+    int[] sum;
+    public int rob(int[] nums) {
+        
+        sum=new int[nums.length];
+        for(int i=0;i<sum.length;i++){
+            sum[i]=-1;
+        }
+        return rob(nums,0);
+    }
+    public int rob(int[] nums,int i){
+        
+        if(i>=nums.length)
+            return 0;
+        if(sum[i]!=-1)
+            return sum[i];
+            
+        int sum1=nums[i]+rob(nums,i+2);
+        int sum2=rob(nums,i+1);
+        sum[i]=Math.max(sum1,sum2);
+        return sum[i];
+    }
+}
