@@ -1,0 +1,72 @@
+class MedianFinder {
+    PriorityQueue<Integer> left, right;
+    int max,min;
+    boolean leftE=true,rightE=true;
+    /** initialize your data structure here. */
+    public MedianFinder() {
+        Comparator<Integer> cmp=(a,b)->b-a;
+        left=new PriorityQueue<>(cmp);
+        right=new PriorityQueue<>();
+        max=-1;
+        min=-1;
+    }
+    
+    public void addNum(int num) {
+        if(leftE==true && rightE==true){
+            left.add(num);
+            leftE=false;
+        }else if(rightE==true){
+            if(num>max){                
+                right.add(num);
+            }
+            else{
+                right.add(left.remove());
+                left.add(num);
+                
+            }
+            rightE=false;
+        }else{
+            if(max<=num && num<=min){
+                if(left.size()==right.size())
+                    left.add(num);
+                else
+                    right.add(num);
+            }
+            else if(num>min){
+                if(left.size()==right.size())
+                {
+                    left.add(right.remove());
+                }
+                    right.add(num);
+                
+            }else if(num<max){
+                if(left.size()!=right.size())
+                {
+                    right.add(left.remove());
+                }
+                    left.add(num);
+            }
+            
+        }
+            if(!left.isEmpty())
+                max=left.peek();
+        if(!right.isEmpty())
+            min=right.peek();
+        
+    }
+    
+    public double findMedian() {
+        if(left.size()==right.size()){
+            return (left.peek()+right.peek())/(double)2;
+        }
+        return left.peek();
+            
+    }
+}
+
+/**
+ * Your MedianFinder object will be instantiated and called as such:
+ * MedianFinder obj = new MedianFinder();
+ * obj.addNum(num);
+ * double param_2 = obj.findMedian();
+ */
