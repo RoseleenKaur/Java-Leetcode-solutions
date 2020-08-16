@@ -1,0 +1,35 @@
+class Solution {
+    int maxsum=-1;
+    public int maxSumTwoNoOverlap(int[] A, int L, int M) {
+        
+        maxSumTwoNoOverlap(A,L,M,0,0);
+        return maxsum;
+    }
+    public void maxSumTwoNoOverlap(int[] A,int L,int M,int id,int sum){
+        int s=0;
+       if(M==0 && L==0){
+           if(sum>maxsum)
+               maxsum=sum;
+           return;
+       }
+        if(id==A.length)
+            return;
+        maxSumTwoNoOverlap(A,L,M,id+1,sum);
+        if(L!=0 && A.length-id>=L){
+            for(int i=id;i<id+L;i++){
+            s+=A[i];
+             }
+            maxSumTwoNoOverlap(A,0,M,id+L,sum+s);
+       
+        }
+            
+        s=0;
+        if(M!=0 && A.length-id>=M){
+        for(int i=id;i<id+M;i++){
+            s+=A[i];
+        }
+        maxSumTwoNoOverlap(A,L,0,id+M,sum+s);
+        }
+    }
+   
+}
