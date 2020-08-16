@@ -1,0 +1,27 @@
+class Solution {
+    int[] memo;
+    public int numSquares(int n) {  
+        memo=new int[n+1];
+        Arrays.fill(memo,Integer.MIN_VALUE);
+      return numSquaresR(n);  
+    }
+    public int numSquaresR(int n){
+        //System.out.print(Math.pow(n,1/2)-(int)Math.pow(n,1/2));
+        if(memo[n]!=Integer.MIN_VALUE)
+            return memo[n];
+        double root=Math.sqrt(n);
+        if((root-Math.floor(root))==0)
+            return 1;
+        
+        int i=1,sq=1,min=Integer.MAX_VALUE,temp;
+        while(sq<=n){
+            temp=numSquaresR(n-sq);
+            if(temp<min)
+                min=temp;
+            i++;
+            sq=i*i;
+        }
+        memo[n]=1+min;
+        return memo[n];
+    }
+}
