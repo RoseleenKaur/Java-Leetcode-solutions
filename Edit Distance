@@ -1,0 +1,45 @@
+class Solution {
+    ArrayList<Integer> word2List=new ArrayList<>();
+    int[][]memo;
+    public int minDistance(String word1, String word2) {
+        memo=new int[word1.length()][word2.length()];
+        for(int i=0;i<memo.length;i++){
+            for(int j=0;j<memo[0].length;j++){
+                memo[i][j]=Integer.MIN_VALUE;
+            }
+        }
+        
+         return minDistanceRecur(word1,word2,0,0);
+        
+        
+    }
+    public int minDistanceRecur(String word1, String word2,int pr, int ind){
+        if(pr>=word1.length()){
+            return word2.length()-ind;
+        }
+        if(ind>=word2.length()){
+            return word1.length()-pr;
+        }
+        if(pr>=word1.length() && ind>=word2.length())
+            return 0;
+        if(memo[pr][ind]!=Integer.MIN_VALUE)
+            return memo[pr][ind];
+        int deleteop, insertop, substituteop;
+        char char1=word1.charAt(pr), char2=word2.charAt(ind);
+        int minop;
+        if(char1!=char2){
+            deleteop=minDistanceRecur(word1,word2,pr+1,ind);
+            insertop=minDistanceRecur(word1,word2,pr,ind+1);
+            substituteop=minDistanceRecur(word1,word2,pr+1,ind+1);
+            minop=Math.min(deleteop,insertop);
+            minop=Math.min(minop,substituteop);
+            memo[pr][ind]=1+minop;
+            return memo[pr][ind];
+        }else{
+            memo[pr][ind]=minDistanceRecur(word1,word2,pr+1,ind+1);
+            return memo[pr][ind];
+        }
+            
+            
+    }
+}
