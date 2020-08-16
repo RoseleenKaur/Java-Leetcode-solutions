@@ -1,0 +1,35 @@
+class Solution {
+    int count=0;
+    String answer;
+    public String getPermutation(int n, int k) {
+        List<Integer> master=new ArrayList<>();
+        for(int i=1;i<=n;i++){
+            master.add(i);
+        }
+        getPermutation(master,new StringBuilder(),k);
+        return answer;
+    }
+    public boolean getPermutation(List<Integer> master,StringBuilder temp, int k){
+        if(master.size()==0){
+            count++;
+            if(count==k){
+                answer=temp.toString();
+                return true;
+            }
+                
+            else
+                return false;
+        }
+            
+        for(int i=0;i<master.size();i++){
+            int value=master.get(i);
+            temp.append(value);
+            master.remove(i);
+            if(getPermutation(master,temp,k))
+                return true;
+            temp.deleteCharAt(temp.length()-1);
+            master.add(i,value);
+        }
+        return false;
+    }
+}
