@@ -1,0 +1,23 @@
+class Solution {
+    int sum=0;
+    public int numTeams(int[] rating) {
+        numTeams(rating,0,new ArrayList<>());
+        return sum;
+    }
+    public void numTeams(int[] rating,int id,List<Integer> list){
+        if(list.size()==3){
+            boolean relation=list.get(0)-list.get(1)>0;
+            if((list.get(1)-list.get(2)>0)==relation)
+                sum++;
+            return;
+        }
+        if(id==rating.length)
+            return;
+        
+        list.add(rating[id]);
+        numTeams(rating,id+1,list);
+        list.remove(list.size()-1);
+        numTeams(rating,id+1,list);
+        
+    }
+}
