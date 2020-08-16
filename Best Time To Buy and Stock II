@@ -1,0 +1,17 @@
+class Solution {
+    public int maxProfit(int[] prices) {
+        if(prices.length==0)
+            return 0;
+        int small=prices[0],high=prices[0],sum=0;
+        for(int i=1;i<prices.length;i++){
+            if(prices[i]<prices[i-1]){
+                sum+=high-small;
+                small=prices[i];
+            high=prices[i];}
+            else if(prices[i]>prices[i-1]){
+                high=prices[i];
+            }
+        }
+        return sum+high-small;
+    }
+}
