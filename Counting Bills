@@ -1,0 +1,18 @@
+class Solution {
+    int[] result;
+    public int[] countBits(int num) {
+        result=new int[num+1];
+        countBits(num,0,0,0);
+        return result;
+    }
+    public void countBits(int num,int i,int number,int count){
+        if(number<=num){
+            result[number]=count;
+        }
+        if(Math.pow(2,i)>num)
+            return;
+        
+        countBits(num,i+1,number+0*(int)Math.pow(2,i),count);
+        countBits(num,i+1,number+1*(int)Math.pow(2,i),count+1);
+    }
+}
