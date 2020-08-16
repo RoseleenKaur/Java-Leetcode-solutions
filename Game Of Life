@@ -1,0 +1,48 @@
+class Solution {
+    public void gameOfLife(int[][] board) {
+        for(int i=0;i<board.length;i++){
+            for(int j=0;j<board[0].length;j++){
+                
+                int[] rows=new int[]{0,0,1,-1,-1,-1,1,1};
+                int[] columns=new int[]{1,-1,0,0,1,-1,1,-1};
+                int r=i,c=j;
+                int ones=0,zeros=0;
+                for(int k=0;k<columns.length;k++){
+                    r=i+rows[k];
+                    c=j+columns[k];
+        
+                    if(r>=0 && r<board.length && c>=0 && c<board[0].length){
+                        if(board[r][c]==0 )
+                            zeros++;
+                        if(board[r][c]==1 )
+                            ones++;
+                        if(board[r][c]==4) //live
+                            ones++;
+                        if(board[r][c]==5)
+                            zeros++;
+                    }
+                }
+                
+                if(board[i][j]==1 && ones>=2 && ones<=3)
+                    board[i][j]=1; //live
+                if(board[i][j]==1 && ones>3)
+                    board[i][j]=4;
+                if(board[i][j]==1 && ones<2)
+                    board[i][j]=4; //zero after change
+                if(board[i][j]==0 && ones==3)
+                    board[i][j]=5;//one after change
+                
+            }
+        }
+        for(int i=0;i<board.length;i++){
+            for(int j=0;j<board[0].length;j++){
+                if(board[i][j]==4)
+                   board[i][j]=0;
+                if(board[i][j]==5)
+                   board[i][j]=1;
+                
+            }
+        }
+    }
+        
+}
