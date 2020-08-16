@@ -1,0 +1,26 @@
+class Solution {
+    List<List<Integer>> result=new ArrayList<>();
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        Arrays.sort(nums);
+        
+        subsetsWithDupRecur(nums,new ArrayList<>(),0,false);
+       
+        
+        return result;
+    }
+    public void subsetsWithDupRecur(int[] nums, List<Integer> list,int index,boolean val){
+        if(index==nums.length){
+            result.add(new ArrayList<>(list));
+            return;
+        }
+        subsetsWithDupRecur(nums,list,index+1,false);
+        if( index!=0 && val==false && nums[index]==nums[index-1])
+           return;
+           
+        list.add(nums[index]);
+        subsetsWithDupRecur(nums,list,index+1,true);
+        list.remove(list.size()-1);
+        
+        
+    }
+}
