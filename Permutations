@@ -1,0 +1,29 @@
+class Solution {
+    List<List<Integer>> list;
+    public List<List<Integer>> permute(int[] nums) {
+        list=new ArrayList<>();
+        List<Integer> left=new ArrayList<Integer>();
+        List<Integer> l=new ArrayList<Integer>();
+        for(int i: nums){
+            left.add(i); 
+        }
+        permute(left,l);
+        return list;
+    }
+    public void permute(List<Integer> left,List<Integer> l){
+        if(left.size()==0){
+            
+            list.add(new ArrayList<Integer>(l));
+            return;
+        }
+        
+        for(int i=0;i<left.size();i++){
+            int item=left.get(i);
+            l.add(item);
+            left.remove(i);
+            permute(left,l);
+            l.remove(l.size()-1);
+            left.add(i,item);
+        }
+    }
+}
