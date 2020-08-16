@@ -1,0 +1,35 @@
+class Solution {
+    public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        HashMap<String,Integer> map=new HashMap<>();
+        for(String word: wordList){
+            map.put(word,-1);
+        }
+        Queue<String> que=new LinkedList<>();
+        que.add(beginWord);
+        map.put(beginWord,1);
+        while(!que.isEmpty()){
+            String temp=que.remove();
+            int dist=map.get(temp);
+            for(String word:wordList){
+                if(map.get(word)==-1 &&oneDistance(word,temp)){ 
+                    map.put(word,dist+1);
+                    que.add(word);
+                    if(word.equals(endWord))
+                        return dist+1;
+                }                   
+            }
+        }
+        return 0;
+    }
+    public boolean oneDistance(String word, String temp){
+        int count=0;
+        
+        for(int i=0;i<word.length();i++){
+            if(word.charAt(i)!=temp.charAt(i))
+                count++;
+        }
+        if(count==1)
+            return true;
+        return false;
+    }
+}
