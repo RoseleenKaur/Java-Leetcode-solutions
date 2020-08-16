@@ -1,0 +1,62 @@
+class Solution {
+    Queue<int[]> deque=new LinkedList<>();
+    int[][] visited;
+    
+    public int shortestPathBinaryMatrix(int[][] grid) {
+        if(grid[0][0]==1)
+            return -1;
+        visited=new int[grid.length][grid[0].length];
+        
+        int[] start=new int[]{0,0},temp;
+        
+        visited[0][0]=1;
+        deque.add(start);
+       
+        while(!deque.isEmpty()){
+            temp=deque.poll();
+            int x=temp[0];
+            int y=temp[1];
+            int dist=visited[x][y];
+        if(x==grid.length-1 &&y==grid[0].length-1)
+                return dist;
+        if(x<grid.length-1 &&check(grid,x+1,y))//down
+            process(grid,x+1,y,dist);
+        
+        if(x>0 &&check(grid,x-1,y))
+             process(grid,x-1,y,dist); //up
+        
+        if(y<grid[0].length-1&&check(grid,x,y+1)) //right
+             process(grid,x,y+1,dist);
+        
+        if(y<grid[0].length-1 && x<grid.length-1 &&check(grid,x+1,y+1)) //
+             process(grid,x+1,y+1,dist);
+        
+        if(x>0 && y>0  &&check(grid,x-1,y-1)) //
+             process(grid,x-1,y-1,dist);
+        
+        if(y>0 &&x<grid.length-1 &&check(grid,x+1,y-1)) //
+             process(grid,x+1,y-1,dist);
+        
+        if(x>0 && y<grid[0].length-1 &&check(grid,x-1,y+1)) //
+             process(grid,x-1,y+1,dist);
+        
+        if(y>0 &&check(grid,x,y-1)) //left
+             process(grid,x,y-1,dist);
+        }
+        if(visited[grid.length-1][grid[0].length-1]==0)
+            return -1;
+        return visited[grid.length-1][grid[0].length-1];
+    }
+    public void process(int[][] grid,int x,int y,int dist){
+        visited[x][y]=dist+1;
+        int[] list=new int[]{x,y};
+        
+        deque.add(list);
+       
+    }
+    public boolean check(int[][] grid,int x,int y){
+        if(grid[x][y]==0 && visited[x][y]==0)
+            return true;
+        return false;
+    }
+}
