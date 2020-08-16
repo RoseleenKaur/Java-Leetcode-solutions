@@ -1,0 +1,47 @@
+class Solution {
+    public int[] searchRange(int[] nums, int target) {
+        if(nums.length==0){
+            return new int[]{-1,-1};
+        }
+        int[] result=new int[]{searchFirst(nums,target,0,nums.length-1),searchLast(nums,target,0,nums.length-1)};
+        return result;
+    }
+    public int searchFirst(int[] nums,int target,int start, int end){
+        
+        if(start==end)
+        {
+            if(nums[start]==target)
+              return start;
+            return -1;
+        }
+        if(nums[start]==target)
+            return start;
+        int mid=(start+end)/2;
+        if(nums[mid]<target && nums[mid+1]==target)
+            return mid+1;
+        else if(nums[mid]<target)
+            return searchFirst(nums,target,mid+1,end);
+        else
+             return searchFirst(nums,target,start,mid);
+            
+    }
+    public int searchLast(int[] nums,int target,int start, int end){
+       
+        if(start==end)
+        {
+            if(nums[start]==target)
+              return start;
+            return -1;
+        }
+        if(nums[end]==target)
+            return end;
+        int mid=(start+end)/2;
+      
+        if(nums[mid+1]>target && nums[mid]==target)
+            return mid;
+        else if(nums[mid+1]>target)
+            return searchLast(nums,target,start,mid);
+        else
+             return searchLast(nums,target,mid+1,end);
+    }
+}
