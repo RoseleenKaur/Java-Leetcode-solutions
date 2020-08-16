@@ -1,0 +1,38 @@
+class Solution {
+    public int findMinArrowShots(int[][] points) {
+        HashMap<Integer,int[]> map=new HashMap<>();
+        for(int i=0;i<points.length;i++){
+            map.put(i,points[i]);
+        }
+        PriorityQueue<Integer> start=new PriorityQueue<>((a,b)->map.get(a)[0]-map.get(b)[0]);
+        PriorityQueue<Integer> end=new PriorityQueue<>((a,b)->map.get(a)[1]-map.get(b)[1]);
+        for(int num: map.keySet()){
+            start.add(num);
+            end.add(num);
+        }
+        HashSet<Integer> set=new HashSet<>();
+        int count=0,noOfBal=0;
+        while(!start.isEmpty()){
+            int st=start.peek();
+            int ed=end.peek();
+            if(map.get(st)[0]<=map.get(ed)[1]){
+                
+                start.remove();
+                set.add(st);
+            }
+            else{                
+                noOfBal++;
+                for(int b:set)
+                    end.remove(b);
+                set.clear();                
+            }
+        }
+        if(set.size()!=0)
+            noOfBal++;
+        
+        
+        return noOfBal;
+            
+        
+    }
+}
