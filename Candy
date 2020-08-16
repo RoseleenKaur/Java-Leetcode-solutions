@@ -1,0 +1,44 @@
+class Solution {
+    int[] count;
+    int sum;
+    public int candy(int[] ratings) {
+        count=new int[ratings.length];
+        Comparator<Integer> cmp=(a,b)->ratings[a]-ratings[b];
+        PriorityQueue<Integer> pq=new PriorityQueue(cmp);
+        for (int i=0;i<count.length;i++){
+            count[i]=1;
+        }
+        sum=0;
+        for(int i=0;i<ratings.length;i++){
+            pq.add(i);                       
+        }
+        
+        while(!pq.isEmpty()){
+            int index=pq.remove();
+            int prevrate,nextrate,prevcount=0,nextcount=0;
+            if(index>0){
+                prevrate=ratings[index-1];
+                prevcount=count[index-1];
+            }   
+            else
+                 prevrate=0;
+            
+               
+            if(index<ratings.length-1){
+                 nextrate=ratings[index+1];
+                 nextcount=count[index+1];
+            }               
+            else
+                nextrate=0;
+            if(ratings[index]>prevrate && ratings[index]>nextrate)
+                count[index]=Math.max(prevcount,nextcount)+1;
+            else if(ratings[index]>prevrate)
+                count[index]=prevcount+1;
+            else if(ratings[index]>nextrate)
+                count[index]=nextcount+1;
+            sum+=count[index];
+        }
+        return sum;
+    }
+    
+}
