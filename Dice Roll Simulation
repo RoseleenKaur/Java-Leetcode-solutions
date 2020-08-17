@@ -1,0 +1,35 @@
+class Solution {
+    Integer[][][] memo;
+    int M=(int)Math.pow(10,9)+7;
+    public int dieSimulator(int n, int[] rollMax) {
+        memo=new Integer[n+1][6][16];
+        return dieSimulator(n,rollMax,-1,0);
+    }
+    public int dieSimulator(int n,int[] rollMax,int lastid,int count){
+        int sum=0;
+        if(lastid!=-1 && rollMax[lastid]<count)
+            return 0;
+        if(n==0)
+            return 1;
+        if(lastid!=-1 && memo[n][lastid][count]!=null)
+            return memo[n][lastid][count];
+        for(int i=0;i<rollMax.length;i++){
+            if(lastid==-1){
+                
+               sum=(sum+ dieSimulator(n-1,rollMax,i,1))%M;
+               
+                continue;
+            }
+            if(i==lastid){
+                
+               sum=(sum+ dieSimulator(n-1,rollMax,lastid,count+1))%M;
+               
+            }else
+                sum=(sum+ dieSimulator(n-1,rollMax,i,1))%M;
+            
+        }
+        if(lastid!=-1)
+            memo[n][lastid][count]=sum;
+        return sum;
+    }
+}
