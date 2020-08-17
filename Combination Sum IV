@@ -1,0 +1,23 @@
+class Solution {
+    Integer[] memo;
+    public int combinationSum4(int[] nums, int target) {
+        memo=new Integer[target+1];
+        return combinationSum4Rec(nums,target);
+    }
+    public int combinationSum4Rec(int[] nums,int target){
+        if(target==0)
+            return 1;
+        if(target<0)
+            return 0;
+        if(memo[target]!=null)
+            return memo[target];
+        
+        
+        int sum=0;
+        for(int i=0;i<nums.length;i++){
+            sum+=combinationSum4Rec(nums,target-nums[i]);
+        }
+        memo[target]=sum;
+        return sum;
+    }
+}
