@@ -1,0 +1,26 @@
+class Solution {
+    Double[][] memo;
+    public double largestSumOfAverages(int[] A, int K) {
+        memo=new Double[A.length][K+1];
+        return largestSumOfAverages(A,K,0);
+    }
+    public double largestSumOfAverages(int[] A,int K,int index){
+        if(index>=A.length || K==0)
+            return 0;
+       if(memo[index][K]!=null)
+           return memo[index][K];
+        double max=0,count=0,sum=0;
+       
+        for(int i=index;i<A.length-K+1;i++){
+            count++;
+            sum+=A[i];
+         
+            max=Math.max(max,(double)(sum/count)+largestSumOfAverages(A,K-1,i+1));
+            
+        }
+        if(K==1)
+            max=sum/count;
+        memo[index][K]=max;
+        return max;
+    }
+}
