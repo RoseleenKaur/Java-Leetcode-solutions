@@ -1,0 +1,22 @@
+class Solution {
+    public boolean isPerfectSquare(int num) {
+        if(num==1)
+            return true;
+        int sqr=(int)Math.sqrt(Integer.MAX_VALUE);
+        return isPerfectSquare(num,0,Math.min(num/2,sqr));
+    }
+    public boolean isPerfectSquare(int num,int start,int end){
+        if(start>end)
+            return false;
+        int mid=(start+end)/2;
+        int sq=mid*mid;
+//System.out.println(sq);
+        if(sq==num)
+            return true;
+        
+        else if(num>sq)
+           return isPerfectSquare(num,mid+1,end);
+        else
+            return isPerfectSquare(num,start,mid-1);
+    }
+}
