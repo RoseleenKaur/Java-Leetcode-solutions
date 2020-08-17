@@ -1,0 +1,47 @@
+class Solution {
+    HashMap<String,Integer> map;
+    Integer[][][] arr;
+    public int wiggleMaxLength(int[] nums) {
+        map=new HashMap<>();
+        arr=new Integer[nums.length][nums.length][2];
+        return wiggleMaxLength(nums,0,-1,-1);
+    }
+    public int wiggleMaxLength(int[] nums,int index,int lastid,int flag){
+        if(index==nums.length)
+            return 0;
+        if(index!=-1 &&lastid!=-1 && flag!=-1 && arr[index][lastid][flag]!=null)
+            return arr[index][lastid][flag];
+     /*   if(map.containsKey(index+":"+lastid+":"+flag))
+            return map.get(index+":"+lastid+":"+flag);*/
+        int val1=0,val2=0;     
+        if(flag==-1 && lastid==-1){
+            val1=1+wiggleMaxLength(nums,index+1,index,flag);
+            val2=wiggleMaxLength(nums,index+1,lastid,flag);
+            
+            
+        }
+        if(flag==-1 && lastid!=-1){
+            if(nums[index]-nums[lastid]!=0)
+                val1=1+wiggleMaxLength(nums,index+1,index,(nums[index]-nums[lastid])>0?1:0);
+            val2=wiggleMaxLength(nums,index+1,lastid,flag);
+           
+        }
+        
+        if(flag!=-1 && lastid!=-1)  {
+            if(((nums[index]-nums[lastid])>0?1:0)!=flag){
+                if(nums[index]-nums[lastid]!=0)
+                    val1=1+wiggleMaxLength(nums,index+1,index,(nums[index]-nums[lastid])>0?1:0);
+                val2=wiggleMaxLength(nums,index+1,lastid,flag);
+                val1=Math.max(val1,val2);
+            }
+            else
+                val1=wiggleMaxLength(nums,index+1,lastid,flag);
+           
+        }    
+      //  map.put(index+":"+lastid+":"+flag,Math.max(val1,val2));
+        if(index!=-1 &&lastid!=-1  && flag!=-1)
+            arr[index][lastid][flag]=Math.max(val1,val2);
+        return  Math.max(val1,val2);
+    }
+        
+}
