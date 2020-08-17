@@ -1,0 +1,47 @@
+class Solution {
+    int[] postvisit;
+    int[] previsit;
+    int count=1;
+    Map<Integer,List<Integer>> map;
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        map=new HashMap<>();
+        for(int i=0;i<prerequisites.length;i++){
+            List<Integer> temp=map.getOrDefault(prerequisites[i][0],new ArrayList<>());
+            temp.add(prerequisites[i][1]);
+            map.put(prerequisites[i][0],temp);
+        }
+        previsit=new int[numCourses];
+        postvisit=new int[numCourses];
+        for(int i=0;i<numCourses;i++){
+          
+            if(previsit[i]==0){
+            if(!dfs(i,prerequisites))
+                return false;
+            }
+                
+        }
+        return true;
+    }
+    public boolean dfs(int cnum,int[][] prereq){
+        
+        previsit[cnum]=count;
+        count++;
+        List<Integer> preR=map.getOrDefault(cnum,null);
+        if(preR!=null){
+            for(int i=0;i<preR.size();i++){
+            int toedge=preR.get(i);
+           
+                if(previsit[toedge]!=0 && postvisit[toedge]==0 )
+                    return false;
+                if(previsit[toedge]==0){
+                     if(!dfs(toedge,prereq))
+                         return false;
+                }                
+            
+            }
+        }
+        postvisit[cnum]=count;
+        count++;
+        return true;
+    }
+}
