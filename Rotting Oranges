@@ -1,0 +1,44 @@
+class Node{
+    int i,j,dist=0;
+    public Node(int x,int y,int d){
+        i=x;j=y;
+        dist=d;
+    }
+}
+class Solution {
+    int freshcount=0;
+    public int orangesRotting(int[][] grid) {
+        Queue<Node> queue=new LinkedList<>();
+        for(int i=0;i<grid.length;i++){
+            for(int j=0;j<grid[0].length;j++){
+                if(grid[i][j]==2){
+                    queue.add(new Node(i,j,0));
+                }
+                else if(grid[i][j]==1)
+                    freshcount++;
+            }
+        }
+        int time=0;
+        while(!queue.isEmpty()){
+            Node temp=queue.remove();
+            insert(temp.i+1,temp.j,temp.dist,queue,grid);
+            insert(temp.i,temp.j+1,temp.dist,queue,grid);
+            insert(temp.i,temp.j-1,temp.dist,queue,grid);
+            insert(temp.i-1,temp.j,temp.dist,queue,grid);
+            time=temp.dist;
+        }
+        if(freshcount==0)
+            return time;
+        return -1;
+        
+    }
+    public void insert(int i, int j, int dist,Queue q,int[][] grid){
+        if(i<grid.length && j<grid[0].length && i>=0 && j>=0){
+            if(grid[i][j]==1){
+                q.add(new Node(i,j,dist+1));
+                freshcount--;
+                grid[i][j]=2;
+            }
+        }
+    }
+}
