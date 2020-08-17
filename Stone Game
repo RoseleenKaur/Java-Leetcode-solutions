@@ -1,0 +1,46 @@
+class Solution {
+    int[][] alex,lee;
+    public boolean stoneGame(int[] piles) {
+        alex=new int[piles.length][piles.length];
+        lee=new int[piles.length][piles.length];
+        for(int i=0;i<piles.length;i++){
+        Arrays.fill(alex[i],Integer.MIN_VALUE);
+        Arrays.fill(lee[i],Integer.MIN_VALUE);
+        }
+        int val=stoneGame(piles, 0,piles.length-1,"alex");
+        if(val>0)
+            return true;
+        return false;
+    }
+    public int stoneGame(int[] piles,int start, int end,String player){
+        if(player.equals("alex")){
+            if(alex[start][end]!=Integer.MIN_VALUE)
+                return alex[start][end];
+        }else if(lee[start][end]!=Integer.MIN_VALUE)
+            return lee[start][end];
+        if(end==start){
+            if(player.equals("alex")){
+                alex[start][end]=piles[end];
+                return piles[end];
+            }
+            lee[start][end]=-piles[end];
+            return -piles[end];
+        }
+        int val1=0,val2=0;
+        if(player.equals("alex")){
+            
+        val1=piles[start]+stoneGame(piles,start+1,end,"lee");
+        val2=piles[end]+stoneGame(piles,start,end-1,"lee");
+            alex[start][end]=Math.max(val1,val2);
+            }
+           if(player.equals("lee")){
+            
+        val1=-piles[start]+stoneGame(piles,start+1,end,"alex");
+        val2=-piles[end]+stoneGame(piles,start,end-1,"alex");
+               lee[start][end]=Math.max(val1,val2);
+            }
+        
+        return Math.max(val1,val2);        
+        
+    }
+}
