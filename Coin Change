@@ -1,0 +1,41 @@
+import java.util.Collections; 
+class Solution {
+    int repeatcount=0;
+   int actual;
+   HashMap<String,Integer> map;
+    public int coinChange(int[] coins, int amount) {
+        actual=amount;
+        map=new HashMap<>();
+       Arrays.sort(coins);
+        //Arrays.reverse(coins);
+        int ans=coinChange(coins,amount,0);
+        if(ans>amount)
+            return -1;
+       System.out.println(repeatcount);
+        return ans;
+    }
+    public int coinChange(int[] coins, int amount,int index){
+        if(amount==0)
+            return 0;
+        if(index>=coins.length)
+            return actual+1;
+        String temp=index+":"+amount;
+        if(map.containsKey(temp)){
+            repeatcount++;
+            return map.get(temp);
+        }
+        int val1,val2;
+        
+        if(amount>=coins[index]){
+            val1=coinChange(coins,amount-coins[index],index);
+            val2=coinChange(coins,amount,index+1);
+           
+            map.put(index+":"+amount,Math.min(val1+1,val2));
+             return Math.min(val1+1,val2);
+        }
+        
+        //map.put(index+":"+amount,actual+1);
+        return actual+1;
+         
+    }
+}
