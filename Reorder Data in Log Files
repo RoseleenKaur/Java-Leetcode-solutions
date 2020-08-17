@@ -1,0 +1,39 @@
+class Solution {
+    PriorityQueue<String> heap;
+    Map<String,StringBuilder> map;
+    
+    public String[] reorderLogFiles(String[] logs) {
+        map=new HashMap<>();
+       
+        String[] numeric=new String[logs.length];
+        int count=0;
+        for(String s:logs){
+            
+            int id=s.indexOf(' ');
+            
+            if(!((s.charAt(id+1)-'0')>=0 && (s.charAt(id+1)-'0')<=9)){
+                StringBuilder sb=new StringBuilder(s.substring(id+1,s.length()));
+                                                   sb.append(s.substring(0,id));
+                
+            map.put(s,sb);
+            }
+            else{
+                numeric[count]=s;
+            count++;
+            }
+        }
+        System.arraycopy(numeric,0,logs,logs.length-count,count);
+        Comparator<String> cmp = (key1, key2) -> map.get(key1).compareTo(map.get(key2));
+        heap=new PriorityQueue<>(cmp);
+        for(String s: map.keySet()){
+            heap.add(s);
+        }
+        count=0;
+        while(!heap.isEmpty()){
+            logs[count]=heap.remove();
+            count++;
+        }
+              
+        return logs;
+    }
+}
