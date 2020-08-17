@@ -1,0 +1,21 @@
+class Solution {
+    Integer[][] memo;
+    public int findTargetSumWays(int[] nums, int S) {
+        memo=new Integer[2001][nums.length];;
+        return findTargetSumWays(nums,0,S,0);
+        
+    }
+    public int findTargetSumWays(int[] nums,int sum, int S, int index){
+        if(S==sum && index==nums.length)
+            return 1;
+        if(index>=nums.length)
+            return 0;
+        if(memo[sum+1000][index]!=null)
+            return memo[sum+1000][index];
+        int val=findTargetSumWays(nums,sum-nums[index],S,index+1)+
+        findTargetSumWays(nums,sum+nums[index],S,index+1); 
+        memo[sum+1000][index]=val;
+        return val;
+        
+    }
+}
