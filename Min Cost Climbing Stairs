@@ -1,0 +1,24 @@
+class Solution {
+    int[] cache;
+    public int minCostClimbingStairs(int[] cost) {
+        cache=new int[cost.length];
+        Arrays.fill(cache,Integer.MAX_VALUE);
+        minCostClimbingStairs(cost,0);
+        return Math.min(cache[0],cache[1]);
+    }
+    public int minCostClimbingStairs(int[] cost,int index){
+        if(index==cost.length-1)
+            return cost[index];
+        if(index>=cost.length)
+            return 0;
+        if(cache[index]!=Integer.MAX_VALUE)
+            return cache[index];
+        int c1,c2;
+        c1=minCostClimbingStairs(cost,index+1);
+        c2=minCostClimbingStairs(cost,index+2);
+        int min=Math.min(c1,c2);
+        cache[index]=min+cost[index];
+        return cache[index];
+        
+    }
+}
