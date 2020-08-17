@@ -1,0 +1,32 @@
+class Solution {
+    HashMap<String,Integer> map;
+    public int findMaxForm(String[] strs, int m, int n) {
+        map=new HashMap<>();
+        return findMaxForm(strs,m,n,0);
+    }
+    public int findMaxForm(String[] strs,int m,int n,int index){
+        if(index>=strs.length)
+            return 0;
+        String str=strs[index];
+        int ones=0,zeros=0;
+        if(map.containsKey(m+":"+n+":"+index))
+            return map.get(m+":"+n+":"+index);
+        for(char c:str.toCharArray()){
+            if(c=='0')
+                zeros++;
+            else
+                ones++;
+        }
+        int val1,val2;
+        if(zeros<=m && ones<=n){
+            val1=findMaxForm(strs,m-zeros,n-ones,index+1);
+            val2=findMaxForm(strs,m,n,index+1);
+            map.put(m+":"+n+":"+index,Math.max(val1+1,val2));
+            return Math.max(val1+1,val2);
+        }
+        else
+            val1=findMaxForm(strs,m,n,index+1);
+        map.put(m+":"+n+":"+index,val1);
+        return val1;
+    }
+}
