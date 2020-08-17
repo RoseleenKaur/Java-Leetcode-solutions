@@ -1,0 +1,56 @@
+class Solution {
+    Integer[][] memo;
+    List<Integer> maxList=new ArrayList<>();
+    
+    public List<Integer> largestDivisibleSubset(int[] nums) {
+        if(nums.length<1)
+            return maxList;
+        if(nums.length==1){
+            maxList.add(nums[0]);
+            return maxList;
+        }
+        int[] newarr=new int[nums.length+1];
+        Arrays.sort(nums);
+        System.arraycopy(nums,0,newarr,1,nums.length);
+        newarr[0]=1;
+        memo=new Integer[nums.length+1][nums.length+1];
+       largestDivisibleSubset(newarr,0,1);
+        int lastid=0,index=1;
+      for(int i=index;i<newarr.length;i++){
+        //  System.out.print(1+memo[i][i+1]>memo[lastid][i+1]);
+          if(newarr[i]%newarr[lastid]==0)
+          {     if(i==newarr.length-1){
+              maxList.add(newarr[i]);
+              continue;
+                 }
+                  
+              if(1+memo[i][i+1]>memo[lastid][i+1]){
+                  maxList.add(newarr[i]);
+                  lastid=i;
+              }
+              
+          }
+      }
+        return maxList;
+    }
+    public int largestDivisibleSubset(int[] nums,int lastid,int index){
+        if(index==nums.length)
+            return 0;
+        if(memo[lastid][index]!=null)
+            return memo[lastid][index];
+     
+        int val1=0,val2=0,val3=0;
+        
+        if(nums[index]%nums[lastid]==0){
+            val2=1+largestDivisibleSubset(nums,index,index+1);
+            val3=largestDivisibleSubset(nums,lastid,index+1);
+            val1=Math.max(val2,val3);
+        }else
+            val1=largestDivisibleSubset(nums,lastid,index+1);
+                        
+       
+        memo[lastid][index]= val1;
+        return val1;
+        
+    }
+}
